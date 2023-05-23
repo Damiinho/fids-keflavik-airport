@@ -1,15 +1,16 @@
 import "./App.css";
-import Arrival from "./Arrival";
-import Departure from "./Departure";
+import AppProvider from "./AppContext";
 import Header from "./Header";
+import Main from "./Main";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Arrival />
-      <Departure />
-    </div>
+    <AppProvider>
+      <div className="App">
+        <Header />
+        <Main />
+      </div>
+    </AppProvider>
   );
 }
 
