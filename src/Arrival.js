@@ -18,19 +18,20 @@ const Arrival = () => {
       });
   }
 
-  console.log(arrival);
-
   const Arrivals = () => {
     return (
       <div className="arrivals">
-        <div>Flight</div>
-        <div>Origin</div>
-        <div>STA</div>
-        <div>ETA</div>
-        <div>Status</div>
-        <div>Stand</div>
-        <div>Belt</div>
-        <div>Gate</div>
+        Arrival
+        <div className="arrivals-item">
+          <div className="No">Flight</div>
+          <div className="OriginDest">Origin</div>
+          <div className="Scheduled">STA</div>
+          <div className="Estimated">ETA</div>
+          <div className="Status">Status</div>
+          <div className="Stand">Stand</div>
+          <div className="BaggageClaim">Belt</div>
+          <div className="Gate">Gate</div>
+        </div>
         {arrival.map((item) => {
           if (
             item.AirlineIATA === "FI" || //Icelandair
@@ -38,8 +39,6 @@ const Arrival = () => {
             item.AirlineIATA === "AY" || //Finnair
             item.AirlineIATA === "DY" || //Norwegian
             item.AirlineIATA === "RC" || //Atlantic
-            item.AirlineIATA === "WK" || //Edelweiss
-            item.AirlineIATA === "LH" || //Lufthansa
             item.AirlineIATA === "SK" || //SAS
             item.AirlineIATA === "GL" || //AirGreenland
             item.AirlineIATA === "E4" || //Enter Air
@@ -67,10 +66,8 @@ const Arrival = () => {
     });
 
     return (
-      <>
-        <div className="No">
-          {data.No}, {data.Airline}
-        </div>
+      <div className="arrivals-item">
+        <div className="No">{data.No}</div>
         <div className="OriginDest">{data.OriginDest}</div>
         <div className="Scheduled">{STA}</div>
         <div className="Estimated">{ETA}</div>
@@ -78,15 +75,11 @@ const Arrival = () => {
         <div className="Stand">{data.Stand}</div>
         <div className="BaggageClaim">{data.BaggageClaim}</div>
         <div className="Gate">{data.Gate}</div>
-      </>
+      </div>
     );
   };
 
-  return (
-    <div>
-      <Arrivals />
-    </div>
-  );
+  return <Arrivals />;
 };
 
 export default Arrival;

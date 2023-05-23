@@ -2,12 +2,29 @@ import { useContext } from "react";
 import { AppContext } from "./AppContext";
 
 const Header = () => {
-  const { isDeparture, setIsDeparture } = useContext(AppContext);
+  const { isDeparture, setIsDeparture, windowWidth } = useContext(AppContext);
 
-  const handleClick = () => setIsDeparture(!isDeparture);
+  const handleSwitch = () => {
+    setIsDeparture((prevState) => !prevState);
+  };
 
   return (
-    <div onClick={handleClick}>{isDeparture ? "Departure" : "Arrival"}</div>
+    <>
+      {windowWidth > 1200 ? (
+        ""
+      ) : (
+        <div className="btn-container">
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={isDeparture}
+              onChange={handleSwitch}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+      )}
+    </>
   );
 };
 

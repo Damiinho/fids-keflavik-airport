@@ -18,18 +18,19 @@ const Departure = () => {
       });
   }
 
-  console.log(departure);
-
   const Departures = () => {
     return (
       <div className="departures">
-        <div>Flight</div>
-        <div>Destination</div>
-        <div>STD</div>
-        <div>ETD</div>
-        <div>Status</div>
-        <div>Stand</div>
-        <div>Gate</div>
+        Departure
+        <div className="departures-item">
+          <div>Flight</div>
+          <div>Destination</div>
+          <div>STD</div>
+          <div>ETD</div>
+          <div>Status</div>
+          <div>Stand</div>
+          <div>Gate</div>
+        </div>
         {departure.map((item) => {
           if (
             item.AirlineIATA === "FI" || //Icelandair
@@ -66,7 +67,7 @@ const Departure = () => {
     });
 
     return (
-      <>
+      <div className="departures-item">
         <div className="No">{data.No}</div>
         <div className="OriginDest">{data.OriginDest}</div>
         <div className="Scheduled">{STA}</div>
@@ -74,15 +75,11 @@ const Departure = () => {
         <div className="Status">{data.Status}</div>
         <div className="Stand">{data.Stand}</div>
         <div className="Gate">{data.Gate}</div>
-      </>
+      </div>
     );
   };
 
-  return (
-    <div>
-      <Departures />
-    </div>
-  );
+  return <Departures />;
 };
 
 export default Departure;

@@ -4,10 +4,21 @@ import Arrival from "./Arrival";
 import Departure from "./Departure";
 
 const Main = () => {
-  const { isDeparture } = useContext(AppContext);
+  const { isDeparture, windowWidth } = useContext(AppContext);
 
   return (
-    <div className="main">{isDeparture ? <Departure /> : <Arrival />}</div>
+    <div className={`main ${windowWidth > 1200 ? "" : "small"}`}>
+      {windowWidth > 1200 ? (
+        <>
+          <Arrival />
+          <Departure />
+        </>
+      ) : isDeparture ? (
+        <Departure />
+      ) : (
+        <Arrival />
+      )}
+    </div>
   );
 };
 
