@@ -23,33 +23,34 @@
   font-weight: bold;
 }
 
-.arrivals-item {
+table {
+  width: 100%;
+}
+
+table thead th {
+  font-weight: bold;
+}
+
+table tbody tr {
   background-color: #eee;
 }
 
+table tbody tr:nth-of-type(2n) {
+  background-color: #fff;
+}
+
+tr th {
+  padding: 2px;
+}
+
+
 @media screen and (max-width: 500px) {
-  .arrivals-item {
+  table {
     font-size: 10px;
   }
 }
 
-.arrivals-item:nth-of-type(2n) {
-  background-color: white;
-}
 
-.departures-item {
-  background-color: #eee;
-}
-
-@media screen and (max-width: 500px) {
-  .departures-item {
-    font-size: 10px;
-  }
-}
-
-.departures-item:nth-of-type(2n) {
-  background-color: white;
-}
 
 .btn-container {
   display: flex;
