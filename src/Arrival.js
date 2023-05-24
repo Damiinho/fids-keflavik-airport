@@ -1,15 +1,31 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
 
 const Arrival = () => {
   const { arrival, setArrival, setUpdateTime, allFlights } =
     useContext(AppContext);
+  const [isETA, setIsETA] = useState(false);
+
+  const handleETA = () => {
+    setIsETA(true);
+  };
+  const handleSTA = () => {
+    setIsETA(false);
+  };
 
   useEffect(() => {
     const fetchData = () => {
       fetch("https://www.isavia.is/fids/arrivals.aspx")
         .then((response) => response.json())
         .then((data) => {
+          if (isETA) {
+            data.Items.sort((a, b) => {
+              if (a.Estimated === null) return 1;
+              if (b.Estimated === null) return -1;
+              return new Date(a.Estimated) - new Date(b.Estimated);
+            });
+          }
+
           setArrival(data.Items);
         })
         .catch((error) => {
@@ -31,7 +47,7 @@ const Arrival = () => {
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, [setArrival, setUpdateTime]);
+  }, [setArrival, setUpdateTime, isETA]);
 
   const Arrivals = () => {
     return (
@@ -40,8 +56,12 @@ const Arrival = () => {
         <div className="arrivals-item">
           <div className="No">Flight</div>
           <div className="OriginDest">Origin</div>
-          <div className="Scheduled">STA</div>
-          <div className="Estimated">ETA</div>
+          <div className="Scheduled" onClick={handleSTA}>
+            STA {isETA ? "" : " ●"}
+          </div>
+          <div className="Estimated" onClick={handleETA}>
+            ETA {isETA ? " ●" : ""}
+          </div>
           <div className="Status">Status</div>
           <div className="Stand">Stand</div>
           <div className="BaggageClaim">Belt</div>
@@ -81,17 +101,24 @@ const Arrival = () => {
       minute: "2-digit",
     });
     const dateETA = new Date(data.Estimated);
-    const ETA = dateETA.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    let ETA = "";
+    if (data.Estimated !== null) {
+      ETA = dateETA.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
 
     return (
       <div className="arrivals-item">
         <div className="No">{data.No}</div>
         <div className="OriginDest">{data.OriginDest}</div>
-        <div className="Scheduled">{STA}</div>
-        <div className="Estimated">{ETA}</div>
+        <div className="Scheduled" onClick={handleSTA}>
+          {STA}
+        </div>
+        <div className="Estimated" onClick={handleETA}>
+          {ETA}
+        </div>
         <div className="Status">
           {data.Additional ? data.Additional : data.Status}
         </div>

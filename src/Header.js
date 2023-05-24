@@ -23,7 +23,7 @@ const Header = () => {
     <>
       <div className="last-updated">Last updated: {updateTime}</div>
       <div className={`form-container ${windowWidth > 1200 ? "" : "small"}`}>
-        <label class="form-control">
+        <label className="form-control">
           <input
             type="checkbox"
             name="checkbox"

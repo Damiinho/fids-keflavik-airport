@@ -232,3 +232,8 @@ input[type="checkbox"]:checked::before {
 .form-control+.form-control {
   margin-top: 1em;
 }
+
+.Scheduled,
+.Estimated {
+  cursor: pointer;
+}
