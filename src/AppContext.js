@@ -5,6 +5,10 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [isDeparture, setIsDeparture] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [arrival, setArrival] = useState([]);
+  const [departure, setDeparture] = useState([]);
+  const [updateTime, setUpdateTime] = useState("");
+  const [allFlights, setAllFlights] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,6 +26,14 @@ export const AppProvider = ({ children }) => {
     isDeparture,
     setIsDeparture,
     windowWidth,
+    arrival,
+    setArrival,
+    departure,
+    setDeparture,
+    updateTime,
+    setUpdateTime,
+    allFlights,
+    setAllFlights,
   };
 
   return (

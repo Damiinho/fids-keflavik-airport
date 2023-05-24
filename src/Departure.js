@@ -1,27 +1,42 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { AppContext } from "./AppContext";
 
 const Departure = () => {
-  const [departure, setDeparture] = useState([]);
+  const { departure, setDeparture, setUpdateTime, allFlights } =
+    useContext(AppContext);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchData = () => {
+      fetch("https://www.isavia.is/fids/departures.aspx")
+        .then((response) => response.json())
+        .then((data) => {
+          setDeparture(data.Items);
+        })
+        .catch((error) => {
+          console.error("Wystąpił błąd:", error);
+        });
 
-  function fetchData() {
-    fetch("https://www.isavia.is/fids/departures.aspx")
-      .then((response) => response.json())
-      .then((data) => {
-        setDeparture(data.Items);
-      })
-      .catch((error) => {
-        console.error("Wystąpił błąd:", error);
-      });
-  }
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      if (hours < 10) {
+        hours = `0${hours}`;
+      }
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      setUpdateTime(`${hours}:${minutes}`);
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 60000);
+    return () => clearInterval(interval);
+  }, [setDeparture, setUpdateTime]);
 
   const Departures = () => {
     return (
       <div className="departures">
-        Departure
+        <div className="title">Departure</div>
         <div className="departures-item">
           <div>Flight</div>
           <div>Destination</div>
@@ -32,22 +47,26 @@ const Departure = () => {
           <div>Gate</div>
         </div>
         {departure.map((item) => {
-          if (
-            item.AirlineIATA === "FI" || //Icelandair
-            item.AirlineIATA === "UA" || //United
-            item.AirlineIATA === "AY" || //Finnair
-            item.AirlineIATA === "DY" || //Norwegian
-            item.AirlineIATA === "RC" || //Atlantic
-            item.AirlineIATA === "WK" || //Edelweiss
-            item.AirlineIATA === "LH" || //Lufthansa
-            item.AirlineIATA === "SK" || //SAS
-            item.AirlineIATA === "GL" || //AirGreenland
-            item.AirlineIATA === "E4" || //Enter Air
-            item.AirlineIATA === "OS" //Austrian
-          ) {
+          if (!allFlights) {
+            if (
+              item.AirlineIATA === "FI" || //Icelandair
+              item.AirlineIATA === "UA" || //United
+              item.AirlineIATA === "AY" || //Finnair
+              item.AirlineIATA === "DY" || //Norwegian
+              item.AirlineIATA === "RC" || //Atlantic
+              item.AirlineIATA === "WK" || //Edelweiss
+              item.AirlineIATA === "LH" || //Lufthansa
+              item.AirlineIATA === "SK" || //SAS
+              item.AirlineIATA === "GL" || //AirGreenland
+              item.AirlineIATA === "E4" || //Enter Air
+              item.AirlineIATA === "OS" //Austrian
+            ) {
+              return <DepartureItem key={item.Id} data={item} />;
+            }
+            return null;
+          } else {
             return <DepartureItem key={item.Id} data={item} />;
           }
-          return null;
         })}
       </div>
     );
