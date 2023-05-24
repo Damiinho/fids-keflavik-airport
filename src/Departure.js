@@ -91,7 +91,9 @@ const Departure = () => {
         <div className="OriginDest">{data.OriginDest}</div>
         <div className="Scheduled">{STA}</div>
         <div className="Estimated">{ETA}</div>
-        <div className="Status">{data.Status}</div>
+        <div className="Status">
+          {data.Additional ? data.Additional : data.Status}
+        </div>
         <div className="Stand">{data.Stand}</div>
         <div className="Gate">{data.Gate}</div>
       </div>
