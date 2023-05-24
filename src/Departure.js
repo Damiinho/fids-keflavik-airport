@@ -53,41 +53,47 @@ const Departure = () => {
     return (
       <div className="departures">
         <div className="title">Departure</div>
-        <div className="departures-item">
-          <div>Flight</div>
-          <div>Destination</div>
-          <div className="Scheduled" onClick={handleSTD}>
-            STD {isETD ? "" : " ●"}
-          </div>
-          <div className="Estimated" onClick={handleETD}>
-            ETD {isETD ? " ●" : ""}
-          </div>
-          <div>Status</div>
-          <div>Stand</div>
-          <div>Gate</div>
-        </div>
-        {departure.map((item) => {
-          if (!allFlights) {
-            if (
-              item.AirlineIATA === "FI" || //Icelandair
-              item.AirlineIATA === "UA" || //United
-              item.AirlineIATA === "AY" || //Finnair
-              item.AirlineIATA === "DY" || //Norwegian
-              item.AirlineIATA === "RC" || //Atlantic
-              item.AirlineIATA === "WK" || //Edelweiss
-              item.AirlineIATA === "LH" || //Lufthansa
-              item.AirlineIATA === "SK" || //SAS
-              item.AirlineIATA === "GL" || //AirGreenland
-              item.AirlineIATA === "E4" || //Enter Air
-              item.AirlineIATA === "OS" //Austrian
-            ) {
-              return <DepartureItem key={item.Id} data={item} />;
-            }
-            return null;
-          } else {
-            return <DepartureItem key={item.Id} data={item} />;
-          }
-        })}
+        <table>
+          <thead className="departures-item">
+            <tr>
+              <th>Flight</th>
+              <th>Destination</th>
+              <th className="Scheduled" onClick={handleSTD}>
+                STD {isETD ? "" : " ●"}
+              </th>
+              <th className="Estimated" onClick={handleETD}>
+                ETD {isETD ? " ●" : ""}
+              </th>
+              <th>Status</th>
+              <th>Stand</th>
+              <th>Gate</th>
+            </tr>{" "}
+          </thead>
+          <tbody>
+            {departure.map((item) => {
+              if (!allFlights) {
+                if (
+                  item.AirlineIATA === "FI" || //Icelandair
+                  item.AirlineIATA === "UA" || //United
+                  item.AirlineIATA === "AY" || //Finnair
+                  item.AirlineIATA === "DY" || //Norwegian
+                  item.AirlineIATA === "RC" || //Atlantic
+                  item.AirlineIATA === "WK" || //Edelweiss
+                  item.AirlineIATA === "LH" || //Lufthansa
+                  item.AirlineIATA === "SK" || //SAS
+                  item.AirlineIATA === "GL" || //AirGreenland
+                  item.AirlineIATA === "E4" || //Enter Air
+                  item.AirlineIATA === "OS" //Austrian
+                ) {
+                  return <DepartureItem key={item.Id} data={item} />;
+                }
+                return null;
+              } else {
+                return <DepartureItem key={item.Id} data={item} />;
+              }
+            })}{" "}
+          </tbody>
+        </table>
       </div>
     );
   };
@@ -110,21 +116,21 @@ const Departure = () => {
     }
 
     return (
-      <div className="departures-item">
-        <div className="No">{data.No}</div>
-        <div className="OriginDest">{data.OriginDest}</div>
-        <div className="Scheduled" onClick={handleSTD}>
+      <tr className="departures-item">
+        <th className="No">{data.No}</th>
+        <th className="OriginDest">{data.OriginDest}</th>
+        <th className="Scheduled" onClick={handleSTD}>
           {STD}
-        </div>
-        <div className="Estimated" onClick={handleETD}>
+        </th>
+        <th className="Estimated" onClick={handleETD}>
           {ETD}
-        </div>
-        <div className="Status">
+        </th>
+        <th className="Status">
           {data.Additional ? data.Additional : data.Status}
-        </div>
-        <div className="Stand">{data.Stand}</div>
-        <div className="Gate">{data.Gate}</div>
-      </div>
+        </th>
+        <th className="Stand">{data.Stand}</th>
+        <th className="Gate">{data.Gate}</th>
+      </tr>
     );
   };
 

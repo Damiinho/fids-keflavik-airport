@@ -53,42 +53,48 @@ const Arrival = () => {
     return (
       <div className="arrivals">
         <div className="title">Arrival</div>
-        <div className="arrivals-item">
-          <div className="No">Flight</div>
-          <div className="OriginDest">Origin</div>
-          <div className="Scheduled" onClick={handleSTA}>
-            STA {isETA ? "" : " ●"}
-          </div>
-          <div className="Estimated" onClick={handleETA}>
-            ETA {isETA ? " ●" : ""}
-          </div>
-          <div className="Status">Status</div>
-          <div className="Stand">Stand</div>
-          <div className="BaggageClaim">Belt</div>
-          <div className="Gate">Gate</div>
-        </div>
-        {arrival.map((item) => {
-          if (!allFlights) {
-            if (
-              item.AirlineIATA === "FI" || //Icelandair
-              item.AirlineIATA === "UA" || //United
-              item.AirlineIATA === "AY" || //Finnair
-              item.AirlineIATA === "DY" || //Norwegian
-              item.AirlineIATA === "RC" || //Atlantic
-              item.AirlineIATA === "WK" || //Edelweiss
-              item.AirlineIATA === "LH" || //Lufthansa
-              item.AirlineIATA === "SK" || //SAS
-              item.AirlineIATA === "GL" || //AirGreenland
-              item.AirlineIATA === "E4" || //Enter Air
-              item.AirlineIATA === "OS" //Austrian
-            ) {
-              return <ArrivalItem key={item.Id} data={item} />;
-            }
-            return null;
-          } else {
-            return <ArrivalItem key={item.Id} data={item} />;
-          }
-        })}
+        <table>
+          <thead className="arrivals-item">
+            <tr>
+              <th className="No">Flight</th>
+              <th className="OriginDest">Origin</th>
+              <th className="Scheduled" onClick={handleSTA}>
+                STA {isETA ? "" : " ●"}
+              </th>
+              <th className="Estimated" onClick={handleETA}>
+                ETA {isETA ? " ●" : ""}
+              </th>
+              <th className="Status">Status</th>
+              <th className="Stand">Stand</th>
+              <th className="BaggageClaim">Belt</th>
+              <th className="Gate">Gate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {arrival.map((item) => {
+              if (!allFlights) {
+                if (
+                  item.AirlineIATA === "FI" || //Icelandair
+                  item.AirlineIATA === "UA" || //United
+                  item.AirlineIATA === "AY" || //Finnair
+                  item.AirlineIATA === "DY" || //Norwegian
+                  item.AirlineIATA === "RC" || //Atlantic
+                  item.AirlineIATA === "WK" || //Edelweiss
+                  item.AirlineIATA === "LH" || //Lufthansa
+                  item.AirlineIATA === "SK" || //SAS
+                  item.AirlineIATA === "GL" || //AirGreenland
+                  item.AirlineIATA === "E4" || //Enter Air
+                  item.AirlineIATA === "OS" //Austrian
+                ) {
+                  return <ArrivalItem key={item.Id} data={item} />;
+                }
+                return null;
+              } else {
+                return <ArrivalItem key={item.Id} data={item} />;
+              }
+            })}
+          </tbody>
+        </table>
       </div>
     );
   };
@@ -110,22 +116,22 @@ const Arrival = () => {
     }
 
     return (
-      <div className="arrivals-item">
-        <div className="No">{data.No}</div>
-        <div className="OriginDest">{data.OriginDest}</div>
-        <div className="Scheduled" onClick={handleSTA}>
+      <tr className="arrivals-item">
+        <th className="No">{data.No}</th>
+        <th className="OriginDest">{data.OriginDest}</th>
+        <th className="Scheduled" onClick={handleSTA}>
           {STA}
-        </div>
-        <div className="Estimated" onClick={handleETA}>
+        </th>
+        <th className="Estimated" onClick={handleETA}>
           {ETA}
-        </div>
-        <div className="Status">
+        </th>
+        <th className="Status">
           {data.Additional ? data.Additional : data.Status}
-        </div>
-        <div className="Stand">{data.Stand}</div>
-        <div className="BaggageClaim">{data.BaggageClaim}</div>
-        <div className="Gate">{data.Gate}</div>
-      </div>
+        </th>
+        <th className="Stand">{data.Stand}</th>
+        <th className="BaggageClaim">{data.BaggageClaim}</th>
+        <th className="Gate">{data.Gate}</th>
+      </tr>
     );
   };
 

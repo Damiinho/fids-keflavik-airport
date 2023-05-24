@@ -24,14 +24,8 @@
 }
 
 .arrivals-item {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr 1fr 2fr 1fr 1fr 1fr;
-  width: 100%;
-  border-left: 1px solid rgb(199, 189, 189);
   background-color: #eee;
 }
-
-
 
 @media screen and (max-width: 500px) {
   .arrivals-item {
@@ -40,38 +34,10 @@
 }
 
 .arrivals-item:nth-of-type(2n) {
-
   background-color: white;
 }
 
-.arrivals-item:first-of-type {
-  background-color: purple;
-}
-
-
-.arrivals-item:last-of-type {
-  border-bottom: 1px solid rgb(199, 189, 189);
-}
-
-.arrivals-item:nth-of-type(2) {
-  font-weight: bold;
-}
-
-.arrivals-item div {
-  border-right: 1px solid rgb(199, 189, 189);
-  border-top: 1px solid rgb(175, 175, 175);
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  overflow: hidden;
-  padding: 2px;
-}
-
 .departures-item {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr 1fr 2fr 1fr 1fr;
-  width: 100%;
-  border-left: 1px solid rgb(199, 189, 189);
   background-color: #eee;
 }
 
@@ -83,24 +49,6 @@
 
 .departures-item:nth-of-type(2n) {
   background-color: white;
-}
-
-.departures-item:last-of-type {
-  border-bottom: 1px solid rgb(199, 189, 189);
-}
-
-.departures-item:nth-of-type(2) {
-  font-weight: bold;
-}
-
-.departures-item div {
-  border-right: 1px solid rgb(199, 189, 189);
-  border-top: 1px solid rgb(175, 175, 175);
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  overflow: hidden;
-  padding: 2px;
 }
 
 .btn-container {
