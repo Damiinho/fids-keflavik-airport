@@ -18,6 +18,14 @@
 }
 
 .title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-text {
   font-size: 25px;
   text-align: center;
   font-weight: bold;
@@ -50,6 +58,10 @@ tr th {
   }
 }
 
+.Scheduled,
+.Estimated {
+  cursor: pointer;
+}
 
 
 .btn-container {
@@ -182,7 +194,16 @@ input[type="checkbox"]:checked::before {
   margin-top: 1em;
 }
 
-.Scheduled,
-.Estimated {
+.form-compact {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  gap: 5px;
+}
+
+.form-compact input {
+  position: relative;
+  top: 3px;
 }

@@ -2,8 +2,15 @@ import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
 
 const Arrival = () => {
-  const { arrival, setArrival, setUpdateTime, allFlights } =
-    useContext(AppContext);
+  const {
+    arrival,
+    setArrival,
+    setUpdateTime,
+    allFlights,
+    windowWidth,
+    compactArrival,
+    setCompactArrival,
+  } = useContext(AppContext);
   const [isETA, setIsETA] = useState(false);
 
   const handleETA = () => {
@@ -11,6 +18,9 @@ const Arrival = () => {
   };
   const handleSTA = () => {
     setIsETA(false);
+  };
+  const handleChange = () => {
+    setCompactArrival((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -52,22 +62,41 @@ const Arrival = () => {
   const Arrivals = () => {
     return (
       <div className="arrivals">
-        <div className="title">Arrival</div>
+        <div className="title">
+          <div className="title-text">Arrival</div>
+          {windowWidth > 1200 ? (
+            <div className="title-button">
+              <label className="form-compact">
+                compact?
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  checked={compactArrival}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+          ) : null}
+        </div>
         <table>
           <thead className="arrivals-item">
             <tr>
               <th className="No">Flight</th>
               <th className="OriginDest">Origin</th>
-              <th className="Scheduled" onClick={handleSTA}>
-                STA {isETA ? "" : " ●"}
-              </th>
+              {compactArrival ? null : (
+                <th className="Scheduled" onClick={handleSTA}>
+                  STA {isETA ? "" : " ●"}
+                </th>
+              )}
+
               <th className="Estimated" onClick={handleETA}>
                 ETA {isETA ? " ●" : ""}
               </th>
-              <th className="Status">Status</th>
+              {compactArrival ? null : <th className="Status">Status</th>}
+
               <th className="Stand">Stand</th>
               <th className="BaggageClaim">Belt</th>
-              <th className="Gate">Gate</th>
+              {compactArrival ? null : <th className="Gate">Gate</th>}
             </tr>
           </thead>
           <tbody>

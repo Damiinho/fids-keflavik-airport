@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
   const [departure, setDeparture] = useState([]);
   const [updateTime, setUpdateTime] = useState("");
   const [allFlights, setAllFlights] = useState(false);
+  const [compactArrival, setCompactArrival] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,6 +23,12 @@ export const AppProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!(windowWidth > 1200) && compactArrival === true) {
+      setCompactArrival(false);
+    }
+  }, [compactArrival, windowWidth]);
+
   const providerValue = {
     isDeparture,
     setIsDeparture,
@@ -34,6 +41,8 @@ export const AppProvider = ({ children }) => {
     setUpdateTime,
     allFlights,
     setAllFlights,
+    compactArrival,
+    setCompactArrival,
   };
 
   return (

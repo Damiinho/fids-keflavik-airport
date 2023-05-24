@@ -22,6 +22,7 @@ const Header = () => {
   return (
     <>
       <div className="last-updated">Last updated: {updateTime}</div>
+
       <div className={`form-container ${windowWidth > 1200 ? "" : "small"}`}>
         <label className="form-control">
           <input
