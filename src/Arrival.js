@@ -103,17 +103,18 @@ const Arrival = () => {
             {arrival.map((item) => {
               if (!allFlights) {
                 if (
-                  item.AirlineIATA === "FI" || //Icelandair
-                  item.AirlineIATA === "UA" || //United
-                  item.AirlineIATA === "AY" || //Finnair
-                  item.AirlineIATA === "DY" || //Norwegian
-                  item.AirlineIATA === "RC" || //Atlantic
-                  item.AirlineIATA === "WK" || //Edelweiss
-                  item.AirlineIATA === "LH" || //Lufthansa
-                  item.AirlineIATA === "SK" || //SAS
-                  item.AirlineIATA === "GL" || //AirGreenland
-                  item.AirlineIATA === "E4" || //Enter Air
-                  item.AirlineIATA === "OS" //Austrian
+                  (item.AirlineIATA === "FI" || //Icelandair
+                    item.AirlineIATA === "UA" || //United
+                    item.AirlineIATA === "AY" || //Finnair
+                    item.AirlineIATA === "DY" || //Norwegian
+                    item.AirlineIATA === "RC" || //Atlantic
+                    item.AirlineIATA === "WK" || //Edelweiss
+                    item.AirlineIATA === "LH" || //Lufthansa
+                    item.AirlineIATA === "SK" || //SAS
+                    item.AirlineIATA === "GL" || //AirGreenland
+                    item.AirlineIATA === "E4" || //Enter Air
+                    item.AirlineIATA === "OS") && //Austrian
+                  !(compactArrival && item.Status === "Cancelled")
                 ) {
                   return <ArrivalItem key={item.Id} data={item} />;
                 }
@@ -148,18 +149,22 @@ const Arrival = () => {
       <tr className="arrivals-item">
         <th className="No">{data.No}</th>
         <th className="OriginDest">{data.OriginDest}</th>
-        <th className="Scheduled" onClick={handleSTA}>
-          {STA}
-        </th>
+        {compactArrival ? null : (
+          <th className="Scheduled" onClick={handleSTA}>
+            {STA}
+          </th>
+        )}
         <th className="Estimated" onClick={handleETA}>
           {ETA}
         </th>
-        <th className="Status">
-          {data.Additional ? data.Additional : data.Status}
-        </th>
+        {compactArrival ? null : (
+          <th className="Status">
+            {data.Additional ? data.Additional : data.Status}
+          </th>
+        )}
         <th className="Stand">{data.Stand}</th>
         <th className="BaggageClaim">{data.BaggageClaim}</th>
-        <th className="Gate">{data.Gate}</th>
+        {compactArrival ? null : <th className="Gate">{data.Gate}</th>}
       </tr>
     );
   };
