@@ -55,6 +55,8 @@ const Arrival = () => {
               item.AirlineIATA === "AY" || //Finnair
               item.AirlineIATA === "DY" || //Norwegian
               item.AirlineIATA === "RC" || //Atlantic
+              item.AirlineIATA === "WK" || //Edelweiss
+              item.AirlineIATA === "LH" || //Lufthansa
               item.AirlineIATA === "SK" || //SAS
               item.AirlineIATA === "GL" || //AirGreenland
               item.AirlineIATA === "E4" || //Enter Air
