@@ -208,3 +208,9 @@ input[type="checkbox"]:checked::before {
   position: relative;
   top: 3px;
 }
+
+.print-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}

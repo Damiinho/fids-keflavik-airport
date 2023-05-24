@@ -9,6 +9,8 @@ const Header = () => {
     updateTime,
     allFlights,
     setAllFlights,
+    setCompactArrival,
+    compactArrival,
   } = useContext(AppContext);
 
   const handleSwitch = () => {
@@ -19,10 +21,26 @@ const Header = () => {
     setAllFlights((prevState) => !prevState);
   };
 
+  const handleChange = () => {
+    setCompactArrival((prevState) => !prevState);
+  };
+
   return (
     <>
       <div className="last-updated">Last updated: {updateTime}</div>
-
+      {windowWidth > 1200 ? (
+        <div className="print-button">
+          <label className="form-compact">
+            🖨️
+            <input
+              type="checkbox"
+              name="checkbox"
+              checked={compactArrival}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+      ) : null}
       <div className={`form-container ${windowWidth > 1200 ? "" : "small"}`}>
         <label className="form-control">
           <input

@@ -2,15 +2,8 @@ import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
 
 const Arrival = () => {
-  const {
-    arrival,
-    setArrival,
-    setUpdateTime,
-    allFlights,
-    windowWidth,
-    compactArrival,
-    setCompactArrival,
-  } = useContext(AppContext);
+  const { arrival, setArrival, setUpdateTime, allFlights, compactArrival } =
+    useContext(AppContext);
   const [isETA, setIsETA] = useState(false);
 
   const handleETA = () => {
@@ -18,9 +11,6 @@ const Arrival = () => {
   };
   const handleSTA = () => {
     setIsETA(false);
-  };
-  const handleChange = () => {
-    setCompactArrival((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -64,19 +54,6 @@ const Arrival = () => {
       <div className="arrivals">
         <div className="title">
           <div className="title-text">Arrival</div>
-          {windowWidth > 1200 ? (
-            <div className="title-button">
-              <label className="form-compact">
-                compact?
-                <input
-                  type="checkbox"
-                  name="checkbox"
-                  checked={compactArrival}
-                  onChange={handleChange}
-                />
-              </label>
-            </div>
-          ) : null}
         </div>
         <table>
           <thead className="arrivals-item">
