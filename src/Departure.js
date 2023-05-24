@@ -21,9 +21,15 @@ const Departure = () => {
         .then((data) => {
           if (isETD) {
             data.Items.sort((a, b) => {
-              if (a.Estimated === null) return 1;
-              if (b.Estimated === null) return -1;
-              return new Date(a.Estimated) - new Date(b.Estimated);
+              if (a.Estimated === null && b.Estimated === null) {
+                return new Date(a.Scheluded) - new Date(b.Scheluded);
+              } else if (a.Estimated !== null && b.Estimated === null) {
+                return new Date(a.Estimated) - new Date(b.Scheluded);
+              } else if (a.Estimated === null && b.Estimated !== null) {
+                return new Date(a.Scheluded) - new Date(b.Estimated);
+              } else {
+                return new Date(a.Estimated) - new Date(b.Estimated);
+              }
             });
           }
           setDeparture(data.Items);
