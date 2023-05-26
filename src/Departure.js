@@ -104,6 +104,7 @@ const Departure = () => {
     const STD = dateSTD.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
+      hour12: false,
     });
     const dateETD = new Date(data.Estimated);
 
@@ -112,6 +113,7 @@ const Departure = () => {
       ETD = dateETD.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
     }
 

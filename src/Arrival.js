@@ -112,6 +112,7 @@ const Arrival = () => {
     const STA = dateSTA.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
+      hour12: false,
     });
     const dateETA = new Date(data.Estimated);
     let ETA = "";
@@ -119,6 +120,7 @@ const Arrival = () => {
       ETA = dateETA.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
     }
 
