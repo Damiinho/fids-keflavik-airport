@@ -109,19 +109,16 @@ const Arrival = () => {
   const ArrivalItem = (props) => {
     const { data } = props;
     const dateSTA = new Date(data.Scheduled);
-    const STA = dateSTA.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
+    const STAHour = dateSTA.getUTCHours().toString().padStart(2, "0");
+    const STAMinutes = dateSTA.getUTCMinutes().toString().padStart(2, "0");
+    const STA = `${STAHour}:${STAMinutes}`;
+
     const dateETA = new Date(data.Estimated);
     let ETA = "";
     if (data.Estimated !== null) {
-      ETA = dateETA.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
+      const ETAHour = dateETA.getUTCHours().toString().padStart(2, "0");
+      const ETAMinutes = dateETA.getUTCMinutes().toString().padStart(2, "0");
+      ETA = `${ETAHour}:${ETAMinutes}`;
     }
 
     return (

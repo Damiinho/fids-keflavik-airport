@@ -101,20 +101,16 @@ const Departure = () => {
   const DepartureItem = (props) => {
     const { data } = props;
     const dateSTD = new Date(data.Scheduled);
-    const STD = dateSTD.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-    const dateETD = new Date(data.Estimated);
+    const STDHour = dateSTD.getUTCHours().toString().padStart(2, "0");
+    const STDMinutes = dateSTD.getUTCMinutes().toString().padStart(2, "0");
+    const STD = `${STDHour}:${STDMinutes}`;
 
+    const dateETD = new Date(data.Estimated);
     let ETD = "";
     if (data.Estimated !== null) {
-      ETD = dateETD.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
+      const ETDHour = dateETD.getUTCHours().toString().padStart(2, "0");
+      const ETDMinutes = dateETD.getUTCMinutes().toString().padStart(2, "0");
+      ETD = `${ETDHour}:${ETDMinutes}`;
     }
 
     return (
