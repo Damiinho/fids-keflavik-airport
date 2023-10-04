@@ -85,6 +85,7 @@ const Departure = () => {
                   item.AirlineIATA === "E4" || //Enter Air
                   item.AirlineIATA === "ENT" || //Enter Air
                   item.AirlineIATA === "CAT" || //Copenhagen Air Taxi
+                  item.AirlineIATA === "QS" || //SmartWings
                   item.AirlineIATA === "OS" //Austrian
                 ) {
                   return <DepartureItem key={item.Id} data={item} />;

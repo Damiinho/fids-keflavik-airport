@@ -92,6 +92,7 @@ const Arrival = () => {
                     item.AirlineIATA === "E4" || //Enter Air
                     item.AirlineIATA === "ENT" || //Enter Air
                     item.AirlineIATA === "CAT" || //Copenhagen Air Taxi
+                    item.AirlineIATA === "QS" || //SmartWings
                     item.AirlineIATA === "OS") && //Austrian
                   !(compactArrival && item.Status === "Cancelled")
                 ) {
