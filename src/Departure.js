@@ -104,6 +104,7 @@ const Departure = () => {
                   (!inputLetters ||
                     windowWidth > 1200 ||
                     matchesSearch(item.No) ||
+                    matchesSearch(item.OriginDestIATA) ||
                     matchesSearch(item.OriginDest))
                 ) {
                   return <DepartureItem key={item.Id} data={item} />;
@@ -114,6 +115,7 @@ const Departure = () => {
                   !inputLetters ||
                   windowWidth > 1200 ||
                   matchesSearch(item.No) ||
+                  matchesSearch(item.OriginDestIATA) ||
                   matchesSearch(item.OriginDest)
                 ) {
                   return <DepartureItem key={item.Id} data={item} />;

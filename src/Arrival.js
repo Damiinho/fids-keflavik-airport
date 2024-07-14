@@ -113,6 +113,7 @@ const Arrival = () => {
                   (!inputLetters ||
                     windowWidth > 1200 ||
                     matchesSearch(item.No) ||
+                    matchesSearch(item.OriginDestIATA) ||
                     matchesSearch(item.OriginDest))
                 ) {
                   return <ArrivalItem key={item.Id} data={item} />;
@@ -123,6 +124,7 @@ const Arrival = () => {
                   !inputLetters ||
                   windowWidth > 1200 ||
                   matchesSearch(item.No) ||
+                  matchesSearch(item.OriginDestIATA) ||
                   matchesSearch(item.OriginDest)
                 ) {
                   return <ArrivalItem key={item.Id} data={item} />;
