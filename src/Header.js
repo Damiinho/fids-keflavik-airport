@@ -62,7 +62,7 @@ const Header = () => {
             <label htmlFor="search">
               <input
                 value={inputLetters}
-                placeholder="number or origin"
+                placeholder="number, origin or IATA"
                 id="search"
                 onChange={(e) => setInputLetters(e.target.value)}
               ></input>
