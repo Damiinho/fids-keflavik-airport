@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [updateTime, setUpdateTime] = useState("");
   const [allFlights, setAllFlights] = useState(false);
   const [compactArrival, setCompactArrival] = useState(false);
+  const [inputLetters, setInputLetters] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,6 +44,8 @@ export const AppProvider = ({ children }) => {
     setAllFlights,
     compactArrival,
     setCompactArrival,
+    inputLetters,
+    setInputLetters,
   };
 
   return (

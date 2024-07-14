@@ -2,8 +2,14 @@ import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
 
 const Departure = () => {
-  const { departure, setDeparture, setUpdateTime, allFlights } =
-    useContext(AppContext);
+  const {
+    departure,
+    setDeparture,
+    setUpdateTime,
+    allFlights,
+    inputLetters,
+    windowWidth,
+  } = useContext(AppContext);
 
   const [isETD, setIsETD] = useState(false);
 
@@ -71,31 +77,50 @@ const Departure = () => {
           </thead>
           <tbody>
             {departure.map((item) => {
+              const matchesAirlineIATA = [
+                "FI", //Icelandair
+                "UA", //United
+                "AY", //Finnair
+                "DY", //Norwegian
+                "RC", //Atlantic
+                "WK", //Edelweiss
+                "LH", //Lufthansa
+                "SK", //SAS
+                "GL", //AirGreenland
+                "E4", //EnterAir
+                "ENT", //EnterAir
+                "CAT", //Copenhagen Air
+                "QS", //SmartWings
+                "C3", //Trade Air
+                "OS", // Austrian
+              ].includes(item.AirlineIATA);
+
+              const matchesSearch = (str) =>
+                str.toLowerCase().includes(inputLetters.toLowerCase());
+
               if (!allFlights) {
                 if (
-                  item.AirlineIATA === "FI" || //Icelandair
-                  item.AirlineIATA === "UA" || //United
-                  item.AirlineIATA === "AY" || //Finnair
-                  item.AirlineIATA === "DY" || //Norwegian
-                  item.AirlineIATA === "RC" || //Atlantic
-                  item.AirlineIATA === "WK" || //Edelweiss
-                  item.AirlineIATA === "LH" || //Lufthansa
-                  item.AirlineIATA === "SK" || //SAS
-                  item.AirlineIATA === "GL" || //AirGreenland
-                  item.AirlineIATA === "E4" || //Enter Air
-                  item.AirlineIATA === "ENT" || //Enter Air
-                  item.AirlineIATA === "CAT" || //Copenhagen Air Taxi
-                  item.AirlineIATA === "QS" || //SmartWings
-                  item.AirlineIATA === "C3" || //Trade Air
-                  item.AirlineIATA === "OS" //Austrian
+                  matchesAirlineIATA &&
+                  (!inputLetters ||
+                    windowWidth > 1200 ||
+                    matchesSearch(item.No) ||
+                    matchesSearch(item.OriginDest))
                 ) {
                   return <DepartureItem key={item.Id} data={item} />;
                 }
                 return null;
               } else {
-                return <DepartureItem key={item.Id} data={item} />;
+                if (
+                  !inputLetters ||
+                  windowWidth > 1200 ||
+                  matchesSearch(item.No) ||
+                  matchesSearch(item.OriginDest)
+                ) {
+                  return <DepartureItem key={item.Id} data={item} />;
+                }
+                return null;
               }
-            })}{" "}
+            })}
           </tbody>
         </table>
       </div>

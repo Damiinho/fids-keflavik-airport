@@ -11,6 +11,8 @@ const Header = () => {
     setAllFlights,
     setCompactArrival,
     compactArrival,
+    inputLetters,
+    setInputLetters,
   } = useContext(AppContext);
 
   const handleSwitch = () => {
@@ -57,6 +59,14 @@ const Header = () => {
       ) : (
         <>
           <div className="btn-container">
+            <label htmlFor="search">
+              <input
+                value={inputLetters}
+                placeholder="number or origin"
+                id="search"
+                onChange={(e) => setInputLetters(e.target.value)}
+              ></input>
+            </label>
             <label className="switch">
               <input
                 type="checkbox"
