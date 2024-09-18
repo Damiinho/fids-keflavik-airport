@@ -22,7 +22,7 @@ const Departure = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("https://www.isavia.is/fids/departures.aspx")
+      fetch("https://www.innanlandsflugvellir.is/fids/departures.aspx")
         .then((response) => response.json())
         .then((data) => {
           if (isETD) {

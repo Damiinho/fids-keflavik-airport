@@ -22,7 +22,7 @@ const Arrival = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("https://www.isavia.is/fids/arrivals.aspx")
+      fetch("https://www.innanlandsflugvellir.is/fids/arrivals.aspx")
         .then((response) => response.json())
         .then((data) => {
           if (isETA) {
