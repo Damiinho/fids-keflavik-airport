@@ -101,6 +101,7 @@ const Arrival = () => {
                 "QS", //SmartWings
                 "C3", //Trade Air
                 "OS", // Austrian
+                "TK", //Turkish Airlines
               ].includes(item.AirlineIATA);
 
               const matchesSearch = (str) =>
@@ -156,7 +157,9 @@ const Arrival = () => {
     return (
       <tr className="arrivals-item">
         <th className="No">{data.No}</th>
-        <th className="OriginDest">{data.OriginDest}</th>
+        <th className="OriginDest">{`${
+          data.OriginDest === "" ? data.OriginDestIATA : data.OriginDest
+        }`}</th>
         {compactArrival ? null : (
           <th className="Scheduled" onClick={handleSTA}>
             {STA}
