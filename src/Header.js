@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
+import Logo from "./Icelandairlogo.svg";
 
 const Header = () => {
   const {
@@ -29,6 +30,9 @@ const Header = () => {
 
   return (
     <>
+      <div className={`logo-container ${windowWidth > 1200 ? "" : "small"}`}>
+        <img src={Logo} alt="" />
+      </div>
       <div className="last-updated">Last updated: {updateTime}</div>
       {windowWidth > 1200 ? (
         <div className="print-button">
@@ -53,20 +57,28 @@ const Header = () => {
           />
           {windowWidth > 1200 ? "Show " : ""} all flights
         </label>
+        <label htmlFor="search">
+          <input
+            value={inputLetters}
+            placeholder="number, origin or IATA"
+            id="search"
+            onChange={(e) => setInputLetters(e.target.value)}
+          ></input>
+        </label>
       </div>
-      {windowWidth > 1200 ? (
-        ""
-      ) : (
-        <>
-          <div className="btn-container">
-            <label htmlFor="search">
-              <input
-                value={inputLetters}
-                placeholder="number, origin or IATA"
-                id="search"
-                onChange={(e) => setInputLetters(e.target.value)}
-              ></input>
-            </label>
+
+      <>
+        <div className="btn-container">
+          <div className="btn-container__name">
+            {windowWidth > 1200
+              ? "Arrival / Departure"
+              : isDeparture
+              ? "Departure"
+              : "Arrival"}
+          </div>
+          {windowWidth > 1200 ? (
+            ""
+          ) : (
             <label className="switch">
               <input
                 type="checkbox"
@@ -75,9 +87,9 @@ const Header = () => {
               />
               <span className="slider round"></span>
             </label>
-          </div>
-        </>
-      )}
+          )}
+        </div>
+      </>
     </>
   );
 };

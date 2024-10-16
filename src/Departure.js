@@ -60,7 +60,6 @@ const Departure = () => {
   const Departures = () => {
     return (
       <div className="departures">
-        <div className="title-text">Departure</div>
         <table>
           <thead className="departures-item">
             <tr>

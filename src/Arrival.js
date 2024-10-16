@@ -61,9 +61,6 @@ const Arrival = () => {
   const Arrivals = () => {
     return (
       <div className="arrivals">
-        <div className="title">
-          <div className="title-text">Arrival</div>
-        </div>
         <table>
           <thead className="arrivals-item">
             <tr>

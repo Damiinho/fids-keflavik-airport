@@ -63,12 +63,27 @@ tr th {
   cursor: pointer;
 }
 
+.logo-container {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.logo-container.small {
+  width: 150px;
+  margin: 0 0;
+}
 
 .btn-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 40px;
   align-items: center;
-  margin: 10px 0 0;
+}
+
+.btn-container__name {
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
 }
 
 input {
@@ -142,15 +157,11 @@ input:checked+.slider:before {
 
 
 .form-container {
+  width: 98%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin: 5px auto;
-}
-
-.form-container.small {
-  margin: 5px;
-  justify-content: flex-start;
+  margin: 0 1% 10px;
 }
 
 .form-control {
