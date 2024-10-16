@@ -22,7 +22,9 @@ const Arrival = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("https://www.innanlandsflugvellir.is/fids/arrivals.aspx")
+      fetch(
+        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Farrivals.aspx"
+      )
         .then((response) => response.json())
         .then((data) => {
           if (isETA) {
