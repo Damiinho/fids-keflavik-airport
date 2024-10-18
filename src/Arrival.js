@@ -91,7 +91,12 @@ const Arrival = () => {
 
               <th className="Stand">Stand</th>
               <th className="BaggageClaim">Belt</th>
-              {compactArrival ? null : (
+              {compactArrival ? null : windowWidth > 1200 ? (
+                <>
+                  <th className="Gate">Gate</th>
+                  <th className="A/C Reg">A/C Reg</th>
+                </>
+              ) : (
                 <th className="Gate GateAC" onClick={handleGateAC}>
                   <span style={{ color: isGateArr ? "" : "lightgray" }}>
                     Gate
@@ -195,7 +200,12 @@ const Arrival = () => {
         )}
         <th className="Stand">{data.Stand}</th>
         <th className="BaggageClaim">{data.BaggageClaim}</th>
-        {compactArrival ? null : (
+        {compactArrival ? null : windowWidth > 1200 ? (
+          <>
+            <th className="Gate">{data.Gate}</th>{" "}
+            <th className="A/C Reg">{data.Aircraft}</th>
+          </>
+        ) : (
           <th className="Gate" onClick={handleGateAC}>
             {isGateArr ? data.Gate : data.Aircraft}
           </th>

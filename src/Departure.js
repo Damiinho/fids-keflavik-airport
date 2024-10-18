@@ -86,14 +86,21 @@ const Departure = () => {
               </th>
               <th>Status</th>
               <th>Stand</th>
-              <th className="Gate GateAC" onClick={handleGateAC}>
-                <span style={{ color: isGateDep ? "" : "lightgray" }}>
-                  Gate
-                </span>
-                <span style={{ color: isGateDep ? "lightgray" : "" }}>
-                  A/C Reg
-                </span>
-              </th>
+              {windowWidth > 1200 ? (
+                <>
+                  <th className="Gate">Gate</th>
+                  <th className="A/C Reg">A/C Reg</th>
+                </>
+              ) : (
+                <th className="Gate GateAC" onClick={handleGateAC}>
+                  <span style={{ color: isGateDep ? "" : "lightgray" }}>
+                    Gate
+                  </span>
+                  <span style={{ color: isGateDep ? "lightgray" : "" }}>
+                    A/C Reg
+                  </span>
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -182,9 +189,16 @@ const Departure = () => {
           {data.Additional ? data.Additional : data.Status}
         </th>
         <th className="Stand">{data.Stand}</th>
-        <th className="Gate" onClick={handleGateAC}>
-          {isGateDep ? data.Gate : data.Aircraft}
-        </th>
+        {windowWidth > 1200 ? (
+          <>
+            <th className="Gate">{data.Gate}</th>
+            <th className="A/C Reg">{data.Aircraft}</th>
+          </>
+        ) : (
+          <th className="Gate" onClick={handleGateAC}>
+            {isGateDep ? data.Gate : data.Aircraft}
+          </th>
+        )}
       </tr>
     );
   };
