@@ -92,8 +92,13 @@ const Arrival = () => {
               <th className="Stand">Stand</th>
               <th className="BaggageClaim">Belt</th>
               {compactArrival ? null : (
-                <th onClick={handleGateAC} className="GateAC">
-                  {isGateArr ? "Gate" : "A/C Reg"} 🗘
+                <th className="Gate GateAC" onClick={handleGateAC}>
+                  <span style={{ color: isGateArr ? "" : "lightgray" }}>
+                    Gate
+                  </span>
+                  <span style={{ color: isGateArr ? "lightgray" : "" }}>
+                    A/C Reg
+                  </span>
                 </th>
               )}
             </tr>
@@ -191,7 +196,9 @@ const Arrival = () => {
         <th className="Stand">{data.Stand}</th>
         <th className="BaggageClaim">{data.BaggageClaim}</th>
         {compactArrival ? null : (
-          <th className="Gate">{isGateArr ? data.Gate : data.Aircraft}</th>
+          <th className="Gate" onClick={handleGateAC}>
+            {isGateArr ? data.Gate : data.Aircraft}
+          </th>
         )}
       </tr>
     );

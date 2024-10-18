@@ -86,8 +86,13 @@ const Departure = () => {
               </th>
               <th>Status</th>
               <th>Stand</th>
-              <th className="GateAC" onClick={handleGateAC}>
-                {isGateDep ? "Gate" : "A/C Reg"} 🗘
+              <th className="Gate GateAC" onClick={handleGateAC}>
+                <span style={{ color: isGateDep ? "" : "lightgray" }}>
+                  Gate
+                </span>
+                <span style={{ color: isGateDep ? "lightgray" : "" }}>
+                  A/C Reg
+                </span>
               </th>
             </tr>
           </thead>
@@ -177,7 +182,9 @@ const Departure = () => {
           {data.Additional ? data.Additional : data.Status}
         </th>
         <th className="Stand">{data.Stand}</th>
-        <th className="Gate">{isGateDep ? data.Gate : data.Aircraft}</th>
+        <th className="Gate" onClick={handleGateAC}>
+          {isGateDep ? data.Gate : data.Aircraft}
+        </th>
       </tr>
     );
   };
