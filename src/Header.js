@@ -69,25 +69,21 @@ const Header = () => {
 
       <>
         <div className="btn-container">
-          <div className="btn-container__name">
-            {windowWidth > 1200
-              ? "Arrival / Departure"
-              : isDeparture
-              ? "Departure"
-              : "Arrival"}
+          <div className="btn-container__name" onClick={handleSwitch}>
+            {windowWidth > 1200 ? (
+              "Arrival / Departure"
+            ) : (
+              <span>
+                <span style={{ color: isDeparture ? "lightgray" : "black" }}>
+                  Arrival
+                </span>{" "}
+                /{" "}
+                <span style={{ color: isDeparture ? "black" : "lightgray" }}>
+                  Departure
+                </span>
+              </span>
+            )}
           </div>
-          {windowWidth > 1200 ? (
-            ""
-          ) : (
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={isDeparture}
-                onChange={handleSwitch}
-              />
-              <span className="slider round"></span>
-            </label>
-          )}
         </div>
       </>
     </>
