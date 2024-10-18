@@ -35,7 +35,7 @@ const Arrival = () => {
         return fetch(url)
           .then((response) => response.json())
           .then((data) => {
-            console.log(`Data from ${url}`);
+            // console.log(`Data from ${url}`);
             if (isETA) {
               data.Items.sort((a, b) => {
                 const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
@@ -137,7 +137,6 @@ const Arrival = () => {
                   matchesAirlineIATA &&
                   !(compactArrival && item.Status === "Cancelled") &&
                   (!inputLetters ||
-                    windowWidth > 1200 ||
                     matchesSearch(item.No) ||
                     matchesSearch(item.OriginDestIATA) ||
                     matchesSearch(item.OriginDest))
@@ -148,7 +147,6 @@ const Arrival = () => {
               } else {
                 if (
                   !inputLetters ||
-                  windowWidth > 1200 ||
                   matchesSearch(item.No) ||
                   matchesSearch(item.OriginDestIATA) ||
                   matchesSearch(item.OriginDest)

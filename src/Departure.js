@@ -35,7 +35,7 @@ const Departure = () => {
         return fetch(url)
           .then((response) => response.json())
           .then((data) => {
-            console.log(`Data from ${url}`);
+            // console.log(`Data from ${url}`);
             if (isETD) {
               data.Items.sort((a, b) => {
                 const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
@@ -131,7 +131,6 @@ const Departure = () => {
                 if (
                   matchesAirlineIATA &&
                   (!inputLetters ||
-                    windowWidth > 1200 ||
                     matchesSearch(item.No) ||
                     matchesSearch(item.OriginDestIATA) ||
                     matchesSearch(item.OriginDest))
@@ -142,7 +141,6 @@ const Departure = () => {
               } else {
                 if (
                   !inputLetters ||
-                  windowWidth > 1200 ||
                   matchesSearch(item.No) ||
                   matchesSearch(item.OriginDestIATA) ||
                   matchesSearch(item.OriginDest)
