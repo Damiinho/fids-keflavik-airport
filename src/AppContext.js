@@ -18,8 +18,6 @@ export const AppProvider = ({ children }) => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
-    setWindowWidth(window.innerWidth);
-
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -28,9 +26,7 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (windowWidth <= 1200 && compactArrival === false) {
-      setCompactArrival(false);
-    } else if (windowWidth > 1200 && compactArrival === true) {
+    if (!(windowWidth > 1200) && compactArrival === true) {
       setCompactArrival(false);
     }
   }, [compactArrival, windowWidth]);
