@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     if (windowWidth <= 1200 && compactArrival === false) {
-      setCompactArrival(true);
+      setCompactArrival(false);
     } else if (windowWidth > 1200 && compactArrival === true) {
       setCompactArrival(false);
     }
