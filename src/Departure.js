@@ -9,6 +9,8 @@ const Departure = () => {
     allFlights,
     inputLetters,
     windowWidth,
+    isGateDep,
+    setIsGateDep,
   } = useContext(AppContext);
 
   const [isETD, setIsETD] = useState(false);
@@ -19,26 +21,37 @@ const Departure = () => {
   const handleSTD = () => {
     setIsETD(false);
   };
+  const handleGateAC = () => {
+    setIsGateDep(!isGateDep);
+  };
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(
-        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Fdepartures.aspx"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (isETD) {
-            data.Items.sort((a, b) => {
-              const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
-              const bValue = b.Estimated !== null ? b.Estimated : b.Scheduled;
-              return new Date(aValue) - new Date(bValue);
-            });
-          }
-          setDeparture(data.Items);
-        })
-        .catch((error) => {
-          console.error("Wystąpił błąd:", error);
+      const url1 = "https://www.innanlandsflugvellir.is/fids/departures.aspx";
+      const url2 =
+        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Fdepartures.aspx";
+
+      const fetchFromUrl = (url) => {
+        return fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(`Data from ${url}`);
+            if (isETD) {
+              data.Items.sort((a, b) => {
+                const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
+                const bValue = b.Estimated !== null ? b.Estimated : b.Scheduled;
+                return new Date(aValue) - new Date(bValue);
+              });
+            }
+            setDeparture(data.Items);
+          });
+      };
+
+      fetchFromUrl(url1).catch(() => {
+        fetchFromUrl(url2).catch((error) => {
+          console.error("Error", error);
         });
+      });
 
       const now = new Date();
       let hours = now.getHours();
@@ -73,8 +86,10 @@ const Departure = () => {
               </th>
               <th>Status</th>
               <th>Stand</th>
-              <th>Gate</th>
-            </tr>{" "}
+              <th className="GateAC" onClick={handleGateAC}>
+                {isGateDep ? "Gate" : "A/C Reg"} 🗘
+              </th>
+            </tr>
           </thead>
           <tbody>
             {departure.map((item) => {
@@ -162,7 +177,7 @@ const Departure = () => {
           {data.Additional ? data.Additional : data.Status}
         </th>
         <th className="Stand">{data.Stand}</th>
-        <th className="Gate">{data.Gate}</th>
+        <th className="Gate">{isGateDep ? data.Gate : data.Aircraft}</th>
       </tr>
     );
   };

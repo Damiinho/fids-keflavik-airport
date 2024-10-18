@@ -11,11 +11,14 @@ export const AppProvider = ({ children }) => {
   const [allFlights, setAllFlights] = useState(false);
   const [compactArrival, setCompactArrival] = useState(false);
   const [inputLetters, setInputLetters] = useState("");
+  const [isGateArr, setIsGateArr] = useState(true);
+  const [isGateDep, setIsGateDep] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
+    setWindowWidth(window.innerWidth);
 
     window.addEventListener("resize", handleResize);
 
@@ -25,7 +28,9 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!(windowWidth > 1200) && compactArrival === true) {
+    if (windowWidth <= 1200 && compactArrival === false) {
+      setCompactArrival(true);
+    } else if (windowWidth > 1200 && compactArrival === true) {
       setCompactArrival(false);
     }
   }, [compactArrival, windowWidth]);
@@ -46,6 +51,10 @@ export const AppProvider = ({ children }) => {
     setCompactArrival,
     inputLetters,
     setInputLetters,
+    isGateArr,
+    isGateDep,
+    setIsGateArr,
+    setIsGateDep,
   };
 
   return (

@@ -10,6 +10,8 @@ const Arrival = () => {
     compactArrival,
     inputLetters,
     windowWidth,
+    isGateArr,
+    setIsGateArr,
   } = useContext(AppContext);
   const [isETA, setIsETA] = useState(false);
 
@@ -19,27 +21,37 @@ const Arrival = () => {
   const handleSTA = () => {
     setIsETA(false);
   };
+  const handleGateAC = () => {
+    setIsGateArr(!isGateArr);
+  };
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(
-        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Farrivals.aspx"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (isETA) {
-            data.Items.sort((a, b) => {
-              const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
-              const bValue = b.Estimated !== null ? b.Estimated : b.Scheduled;
-              return new Date(aValue) - new Date(bValue);
-            });
-          }
+      const url1 = "https://www.innanlandsflugvellir.is/fids/arrivals.aspx";
+      const url2 =
+        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Farrivals.aspx";
 
-          setArrival(data.Items);
-        })
-        .catch((error) => {
-          console.error("Wystąpił błąd:", error);
+      const fetchFromUrl = (url) => {
+        return fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(`Data from ${url}`);
+            if (isETA) {
+              data.Items.sort((a, b) => {
+                const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
+                const bValue = b.Estimated !== null ? b.Estimated : b.Scheduled;
+                return new Date(aValue) - new Date(bValue);
+              });
+            }
+            setArrival(data.Items);
+          });
+      };
+
+      fetchFromUrl(url1).catch(() => {
+        fetchFromUrl(url2).catch((error) => {
+          console.error("Error", error);
         });
+      });
 
       const now = new Date();
       let hours = now.getHours();
@@ -79,7 +91,11 @@ const Arrival = () => {
 
               <th className="Stand">Stand</th>
               <th className="BaggageClaim">Belt</th>
-              {compactArrival ? null : <th className="Gate">Gate</th>}
+              {compactArrival ? null : (
+                <th onClick={handleGateAC} className="GateAC">
+                  {isGateArr ? "Gate" : "A/C Reg"} 🗘
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -174,7 +190,9 @@ const Arrival = () => {
         )}
         <th className="Stand">{data.Stand}</th>
         <th className="BaggageClaim">{data.BaggageClaim}</th>
-        {compactArrival ? null : <th className="Gate">{data.Gate}</th>}
+        {compactArrival ? null : (
+          <th className="Gate">{isGateArr ? data.Gate : data.Aircraft}</th>
+        )}
       </tr>
     );
   };

@@ -59,7 +59,8 @@ tr th {
 }
 
 .Scheduled,
-.Estimated {
+.Estimated,
+.GateAC {
   cursor: pointer;
 }
 
