@@ -33,10 +33,27 @@ const Departure = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      const url1 =
-        "https://www.kefairport.is/api/sourceData?from=2024-12-02T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
-      const url2 =
-        "https://corsproxy.io/?https%3A%2F%2Fwww.kefairport.is%2Fapi%2FsourceData%3Ffrom%3D2024-12-02T03%3A17%3A31.181Z%26to%3D2024-12-03T03%3A17%3A31.181Z";
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+
+      const oneDayBack = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      const oneDayForward = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+      const from = oneDayBack.toISOString();
+      const to = oneDayForward.toISOString();
+
+      if (hours < 10) {
+        hours = `0${hours}`;
+      }
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+
+      setUpdateTime(`${hours}:${minutes}`);
+
+      const url1 = `https://www.kefairport.is/api/sourceData?from=${from}&to=${to}`;
+      const url2 = `https://corsproxy.io/?${url1}`;
 
       const fetchFromUrl = (url) => {
         return fetch(url)
@@ -67,17 +84,6 @@ const Departure = () => {
           console.error("Error", error);
         });
       });
-
-      const now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      if (hours < 10) {
-        hours = `0${hours}`;
-      }
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
-      setUpdateTime(`${hours}:${minutes}`);
     };
 
     fetchData();
