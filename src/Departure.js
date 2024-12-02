@@ -30,7 +30,7 @@ const Departure = () => {
       const url1 =
         "https://www.kefairport.is/api/sourceData?from=2024-12-02T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
       const url2 =
-        "https://www.kefairport.is/api/sourceData?from=2024-12-01T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
+        "https://corsproxy.io/?https%3A%2F%2Fwww.kefairport.is%2Fapi%2FsourceData%3Ffrom%3D2024-12-02T03%3A17%3A31.181Z%26to%3D2024-12-03T03%3A17%3A31.181Z";
 
       const fetchFromUrl = (url) => {
         return fetch(url)
