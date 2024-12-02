@@ -37,10 +37,10 @@ const Departure = () => {
       let hours = now.getHours();
       let minutes = now.getMinutes();
 
-      const oneDayBack = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      const threeHoursBack = new Date(now.getTime() - 3 * 60 * 60 * 1000);
       const oneDayForward = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
-      const from = oneDayBack.toISOString();
+      const from = threeHoursBack.toISOString();
       const to = oneDayForward.toISOString();
 
       if (hours < 10) {
