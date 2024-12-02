@@ -33,10 +33,30 @@ const Arrival = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      const url1 =
-        "https://www.kefairport.is/api/sourceData?from=2024-12-01T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
-      const url2 =
-        "https://corsproxy.io/?https%3A%2F%2Fwww.kefairport.is%2Fapi%2FsourceData%3Ffrom%3D2024-12-02T03%3A17%3A31.181Z%26to%3D2024-12-03T03%3A17%3A31.181Z";
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let day = now.getDate();
+      let month = now.getMonth() + 1; // Dodajemy 1, bo miesiące są indeksowane od 0
+      let year = now.getFullYear();
+
+      if (hours < 10) {
+        hours = `0${hours}`;
+      }
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      if (day < 10) {
+        day = `0${day}`;
+      }
+      if (month < 10) {
+        month = `0${month}`;
+      }
+      setUpdateTime(`${hours}:${minutes}`);
+      console.log(`Data: ${day}-${month}-${year}, Czas: ${hours}:${minutes}`);
+
+      const url1 = `https://www.kefairport.is/api/sourceData?from=2024-12-01T21:07:26.900Z&to=2024-12-03T21:07:26.900Z`;
+      const url2 = `https://corsproxy.io/?https%3A%2F%2Fwww.kefairport.is%2Fapi%2FsourceData%3Ffrom%3D2024-12-02T${hours}:${minutes}:00.000Z`;
 
       const fetchFromUrl = (url) => {
         return fetch(url)
@@ -67,17 +87,6 @@ const Arrival = () => {
           console.error("Error", error);
         });
       });
-
-      const now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      if (hours < 10) {
-        hours = `0${hours}`;
-      }
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
-      setUpdateTime(`${hours}:${minutes}`);
     };
 
     fetchData();
@@ -217,9 +226,11 @@ const Arrival = () => {
         </th>
         {compactArrival ? null : (
           <th className="Status">
-            {data.FlightStatusDesc
-              ? data.FlightStatusDesc
-              : data.LandsodeMessage1}
+            {data.LandsideMessage1
+              ? data.LandsideMessage1 === "DYNAMIC MESSAGING"
+                ? "Estimated"
+                : data.LandsideMessage1
+              : data.FlightStatusDesc}
           </th>
         )}
         <th className="Stand">{data.StandCode}</th>

@@ -206,9 +206,11 @@ const Departure = () => {
           {ETD}
         </th>
         <th className="Status">
-          {data.FlightStatusDesc
-            ? data.FlightStatusDesc
-            : data.LandsodeMessage1}
+          {data.LandsideMessage1
+            ? data.LandsideMessage1 === "DYNAMIC MESSAGING"
+              ? "Estimated"
+              : data.LandsideMessage1
+            : data.FlightStatusDesc}
         </th>
         <th className="Stand">{data.StandCode}</th>
         {windowWidth > 1200 ? (
