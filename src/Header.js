@@ -77,7 +77,6 @@ const Header = () => {
                 <span style={{ color: isDeparture ? "lightgray" : "black" }}>
                   Arrival
                 </span>{" "}
-                /{" "}
                 <span style={{ color: isDeparture ? "black" : "lightgray" }}>
                   Departure
                 </span>

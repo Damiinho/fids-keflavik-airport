@@ -27,23 +27,32 @@ const Arrival = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      const url1 = "https://www.innanlandsflugvellir.is/fids/arrivals.aspx";
+      const url1 =
+        "https://www.kefairport.is/api/sourceData?from=2024-12-01T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
       const url2 =
-        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Farrivals.aspx";
+        "https://www.kefairport.is/api/sourceData?from=2024-12-01T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
 
       const fetchFromUrl = (url) => {
         return fetch(url)
           .then((response) => response.json())
+          .then((data) =>
+            data.value.filter((item) => item.DepartureArrivalType === "A")
+          )
           .then((data) => {
-            // console.log(`Data from ${url}`);
             if (isETA) {
-              data.Items.sort((a, b) => {
-                const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
-                const bValue = b.Estimated !== null ? b.Estimated : b.Scheduled;
+              data.sort((a, b) => {
+                const aValue =
+                  a.EstimatedDateTime !== null
+                    ? a.EstimatedDateTime
+                    : a.ScheduledDateTime;
+                const bValue =
+                  b.EstimatedDateTime !== null
+                    ? b.EstimatedDateTime
+                    : b.ScheduledDateTime;
                 return new Date(aValue) - new Date(bValue);
               });
             }
-            setArrival(data.Items);
+            setArrival(data);
           });
       };
 
@@ -135,11 +144,11 @@ const Arrival = () => {
               if (!allFlights) {
                 if (
                   matchesAirlineIATA &&
-                  !(compactArrival && item.Status === "Cancelled") &&
+                  !(compactArrival && item.FlightStatusDesc === "Cancelled") &&
                   (!inputLetters ||
-                    matchesSearch(item.No) ||
-                    matchesSearch(item.OriginDestIATA) ||
-                    matchesSearch(item.OriginDest))
+                    matchesSearch(item.AirlineIATA + item.FlightNumber) ||
+                    matchesSearch(item.OriginDestAirportIATA) ||
+                    matchesSearch(item.OriginDestAirportDesc))
                 ) {
                   return <ArrivalItem key={item.Id} data={item} />;
                 }
@@ -147,9 +156,9 @@ const Arrival = () => {
               } else {
                 if (
                   !inputLetters ||
-                  matchesSearch(item.No) ||
-                  matchesSearch(item.OriginDestIATA) ||
-                  matchesSearch(item.OriginDest)
+                  matchesSearch(item.AirlineIATA + item.FlightNumber) ||
+                  matchesSearch(item.OriginDestAirportIATA) ||
+                  matchesSearch(item.OriginDestAirportDesc)
                 ) {
                   return <ArrivalItem key={item.Id} data={item} />;
                 }
@@ -164,14 +173,14 @@ const Arrival = () => {
 
   const ArrivalItem = (props) => {
     const { data } = props;
-    const dateSTA = new Date(data.Scheduled);
+    const dateSTA = new Date(data.ScheduledDateTime);
     const STAHour = dateSTA.getUTCHours().toString().padStart(2, "0");
     const STAMinutes = dateSTA.getUTCMinutes().toString().padStart(2, "0");
     const STA = `${STAHour}:${STAMinutes}`;
 
-    const dateETA = new Date(data.Estimated);
+    const dateETA = new Date(data.EstimatedDateTime);
     let ETA = "";
-    if (data.Estimated !== null) {
+    if (data.EstimatedDateTime !== null) {
       const ETAHour = dateETA.getUTCHours().toString().padStart(2, "0");
       const ETAMinutes = dateETA.getUTCMinutes().toString().padStart(2, "0");
       ETA = `${ETAHour}:${ETAMinutes}`;
@@ -179,9 +188,11 @@ const Arrival = () => {
 
     return (
       <tr className="arrivals-item">
-        <th className="No">{data.No}</th>
+        <th className="No">{data.AirlineIATA + data.FlightNumber}</th>
         <th className="OriginDest">{`${
-          data.OriginDest === "" ? data.OriginDestIATA : data.OriginDest
+          data.OriginDestAirportDesc === ""
+            ? data.OriginDestAirportIATA
+            : data.OriginDestAirportDesc
         }`}</th>
         {compactArrival ? null : (
           <th className="Scheduled" onClick={handleSTA}>
@@ -193,19 +204,21 @@ const Arrival = () => {
         </th>
         {compactArrival ? null : (
           <th className="Status">
-            {data.Additional ? data.Additional : data.Status}
+            {data.LandsodeMessage1
+              ? data.LandsodeMessage1
+              : data.FlightStatusDesc}
           </th>
         )}
-        <th className="Stand">{data.Stand}</th>
-        <th className="BaggageClaim">{data.BaggageClaim}</th>
+        <th className="Stand">{data.StandCode}</th>
+        <th className="BaggageClaim">{data.BaggageClaimUnit}</th>
         {compactArrival ? null : windowWidth > 1200 ? (
           <>
-            <th className="Gate">{data.Gate}</th>{" "}
-            <th className="A/C Reg">{data.Aircraft}</th>
+            <th className="Gate">{data.GateCode}</th>{" "}
+            <th className="A/C Reg">{data.Registration}</th>
           </>
         ) : (
           <th className="Gate" onClick={handleGateAC}>
-            {isGateArr ? data.Gate : data.Aircraft}
+            {isGateArr ? data.GateCode : data.Registration}
           </th>
         )}
       </tr>

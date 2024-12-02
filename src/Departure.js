@@ -27,23 +27,32 @@ const Departure = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      const url1 = "https://www.innanlandsflugvellir.is/fids/departures.aspx";
+      const url1 =
+        "https://www.kefairport.is/api/sourceData?from=2024-12-02T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
       const url2 =
-        "https://corsproxy.io/?https%3A%2F%2Fwww.innanlandsflugvellir.is%2Ffids%2Fdepartures.aspx";
+        "https://www.kefairport.is/api/sourceData?from=2024-12-01T03:17:31.181Z&to=2024-12-03T03:17:31.181Z";
 
       const fetchFromUrl = (url) => {
         return fetch(url)
           .then((response) => response.json())
+          .then((data) =>
+            data.value.filter((item) => item.DepartureArrivalType === "D")
+          )
           .then((data) => {
-            // console.log(`Data from ${url}`);
             if (isETD) {
-              data.Items.sort((a, b) => {
-                const aValue = a.Estimated !== null ? a.Estimated : a.Scheduled;
-                const bValue = b.Estimated !== null ? b.Estimated : b.Scheduled;
+              data.sort((a, b) => {
+                const aValue =
+                  a.EstimatedDateTime !== null
+                    ? a.EstimatedDateTime
+                    : a.ScheduledDateTime;
+                const bValue =
+                  b.EstimatedDateTime !== null
+                    ? b.EstimatedDateTime
+                    : b.ScheduledDateTime;
                 return new Date(aValue) - new Date(bValue);
               });
             }
-            setDeparture(data.Items);
+            setDeparture(data);
           });
       };
 
@@ -131,19 +140,18 @@ const Departure = () => {
                 if (
                   matchesAirlineIATA &&
                   (!inputLetters ||
-                    matchesSearch(item.No) ||
-                    matchesSearch(item.OriginDestIATA) ||
-                    matchesSearch(item.OriginDest))
+                    matchesSearch(item.AirlineIATA + item.FlightNumber) ||
+                    matchesSearch(item.OriginDestAirportIATA) ||
+                    matchesSearch(item.OriginDestAirportDesc))
                 ) {
                   return <DepartureItem key={item.Id} data={item} />;
                 }
                 return null;
               } else {
                 if (
-                  !inputLetters ||
-                  matchesSearch(item.No) ||
-                  matchesSearch(item.OriginDestIATA) ||
-                  matchesSearch(item.OriginDest)
+                  matchesSearch(item.AirlineIATA + item.FlightNumber) ||
+                  matchesSearch(item.OriginDestAirportIATA) ||
+                  matchesSearch(item.OriginDestAirportDesc)
                 ) {
                   return <DepartureItem key={item.Id} data={item} />;
                 }
@@ -158,14 +166,14 @@ const Departure = () => {
 
   const DepartureItem = (props) => {
     const { data } = props;
-    const dateSTD = new Date(data.Scheduled);
+    const dateSTD = new Date(data.ScheduledDateTime);
     const STDHour = dateSTD.getUTCHours().toString().padStart(2, "0");
     const STDMinutes = dateSTD.getUTCMinutes().toString().padStart(2, "0");
     const STD = `${STDHour}:${STDMinutes}`;
 
-    const dateETD = new Date(data.Estimated);
+    const dateETD = new Date(data.EstimatedDateTime);
     let ETD = "";
-    if (data.Estimated !== null) {
+    if (data.EstimatedDateTime !== null) {
       const ETDHour = dateETD.getUTCHours().toString().padStart(2, "0");
       const ETDMinutes = dateETD.getUTCMinutes().toString().padStart(2, "0");
       ETD = `${ETDHour}:${ETDMinutes}`;
@@ -173,9 +181,11 @@ const Departure = () => {
 
     return (
       <tr className="departures-item">
-        <th className="No">{data.No}</th>
+        <th className="No">{data.AirlineIATA + data.FlightNumber}</th>
         <th className="OriginDest">{`${
-          data.OriginDest === "" ? data.OriginDestIATA : data.OriginDest
+          data.OriginDestAirportDesc === ""
+            ? data.OriginDestAirportIATA
+            : data.OriginDestAirportDesc
         }`}</th>
         <th className="Scheduled" onClick={handleSTD}>
           {STD}
@@ -184,17 +194,19 @@ const Departure = () => {
           {ETD}
         </th>
         <th className="Status">
-          {data.Additional ? data.Additional : data.Status}
+          {data.LandsodeMessage1
+            ? data.LandsodeMessage1
+            : data.FlightStatusDesc}
         </th>
-        <th className="Stand">{data.Stand}</th>
+        <th className="Stand">{data.StandCode}</th>
         {windowWidth > 1200 ? (
           <>
-            <th className="Gate">{data.Gate}</th>
-            <th className="A/C Reg">{data.Aircraft}</th>
+            <th className="Gate">{data.GateCode}</th>
+            <th className="A/C Reg">{data.Registration}</th>
           </>
         ) : (
           <th className="Gate" onClick={handleGateAC}>
-            {isGateDep ? data.Gate : data.Aircraft}
+            {isGateDep ? data.GateCode : data.Registration}
           </th>
         )}
       </tr>
