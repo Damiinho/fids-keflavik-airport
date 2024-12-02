@@ -11,6 +11,8 @@ const Departure = () => {
     windowWidth,
     isGateDep,
     setIsGateDep,
+    destinationIataSwitch,
+    setDestinationIataSwitch,
   } = useContext(AppContext);
 
   const [isETD, setIsETD] = useState(false);
@@ -23,6 +25,9 @@ const Departure = () => {
   };
   const handleGateAC = () => {
     setIsGateDep(!isGateDep);
+  };
+  const handleDestinationSwitch = () => {
+    setDestinationIataSwitch(!destinationIataSwitch);
   };
 
   useEffect(() => {
@@ -85,8 +90,10 @@ const Departure = () => {
         <table>
           <thead className="departures-item">
             <tr>
-              <th>Flight</th>
-              <th>Destination</th>
+              <th>Flight</th>{" "}
+              <th className="OriginDest" onClick={handleDestinationSwitch}>
+                {destinationIataSwitch ? "Destination" : "IATA"}
+              </th>
               <th className="Scheduled" onClick={handleSTD}>
                 STD {isETD ? "" : " ●"}
               </th>
@@ -178,15 +185,18 @@ const Departure = () => {
       const ETDMinutes = dateETD.getUTCMinutes().toString().padStart(2, "0");
       ETD = `${ETDHour}:${ETDMinutes}`;
     }
-
     return (
       <tr className="departures-item">
         <th className="No">{data.AirlineIATA + data.FlightNumber}</th>
-        <th className="OriginDest">{`${
-          data.OriginDestAirportDesc === ""
-            ? data.OriginDestAirportIATA
-            : data.OriginDestAirportDesc
-        }`}</th>
+        <th className="OriginDest" onClick={handleDestinationSwitch}>
+          {destinationIataSwitch
+            ? `${
+                data.OriginDestAirportDesc === ""
+                  ? data.OriginDestAirportIATA
+                  : data.OriginDestAirportDesc
+              }`
+            : data.OriginDestAirportIATA}
+        </th>
         <th className="Scheduled" onClick={handleSTD}>
           {STD}
         </th>
@@ -194,9 +204,9 @@ const Departure = () => {
           {ETD}
         </th>
         <th className="Status">
-          {data.LandsodeMessage1
-            ? data.LandsodeMessage1
-            : data.FlightStatusDesc}
+          {data.FlightStatusDesc
+            ? data.FlightStatusDesc
+            : data.LandsodeMessage1}
         </th>
         <th className="Stand">{data.StandCode}</th>
         {windowWidth > 1200 ? (

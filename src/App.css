@@ -60,7 +60,8 @@ tr th {
 
 .Scheduled,
 .Estimated,
-.Gate {
+.Gate,
+.OriginDest {
   cursor: pointer;
 }
 

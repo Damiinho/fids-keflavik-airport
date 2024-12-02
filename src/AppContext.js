@@ -13,6 +13,8 @@ export const AppProvider = ({ children }) => {
   const [inputLetters, setInputLetters] = useState("");
   const [isGateArr, setIsGateArr] = useState(true);
   const [isGateDep, setIsGateDep] = useState(true);
+  const [originIataSwitch, setOriginIataSwitch] = useState(true);
+  const [destinationIataSwitch, setDestinationIataSwitch] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,6 +53,10 @@ export const AppProvider = ({ children }) => {
     isGateDep,
     setIsGateArr,
     setIsGateDep,
+    originIataSwitch,
+    setOriginIataSwitch,
+    destinationIataSwitch,
+    setDestinationIataSwitch,
   };
 
   return (
