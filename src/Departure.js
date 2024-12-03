@@ -53,7 +53,9 @@ const Departure = () => {
       setUpdateTime(`${hours}:${minutes}`);
 
       const url1 = `https://www.kefairport.is/api/sourceData?from=${from}&to=${to}`;
-      const url2 = `https://cors-anywhere.herokuapp.com/${url1}`;
+      const url2 = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+        url1
+      )}`;
 
       const fetchFromUrl = (url) => {
         return fetch(url)
