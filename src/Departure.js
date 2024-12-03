@@ -1,6 +1,5 @@
 import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
-import SwitchIMG from "./switch.png";
 
 const Departure = () => {
   const {
@@ -101,8 +100,16 @@ const Departure = () => {
             <tr>
               <th>Flight</th>{" "}
               <th className="OriginDest" onClick={handleDestinationSwitch}>
-                {destinationIataSwitch ? "Destination" : "IATA"}{" "}
-                <img src={SwitchIMG} alt="" height={12} />
+                <span
+                  style={{ color: destinationIataSwitch ? "" : "lightgray" }}
+                >
+                  Destination
+                </span>{" "}
+                <span
+                  style={{ color: destinationIataSwitch ? "lightgray" : "" }}
+                >
+                  IATA
+                </span>
               </th>
               <th className="Scheduled" onClick={handleSTD}>
                 STD {isETD ? "" : " ●"}

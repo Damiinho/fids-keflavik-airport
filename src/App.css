@@ -65,7 +65,8 @@ tr th {
   cursor: pointer;
 }
 
-.Gate span {
+.Gate span,
+.OriginDest span {
   font-weight: bold;
 }
 
@@ -88,6 +89,7 @@ tr th {
   justify-content: center;
   gap: 40px;
   align-items: center;
+  cursor: pointer;
 }
 
 .btn-container__name {
