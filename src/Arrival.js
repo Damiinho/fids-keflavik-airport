@@ -16,6 +16,7 @@ const Arrival = () => {
     setOriginIataSwitch,
   } = useContext(AppContext);
   const [isETA, setIsETA] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleETA = () => {
     setIsETA(true);
@@ -32,6 +33,7 @@ const Arrival = () => {
 
   useEffect(() => {
     const fetchData = () => {
+      setIsLoading(true);
       const now = new Date();
       let hours = now.getHours();
       let minutes = now.getMinutes();
@@ -80,11 +82,12 @@ const Arrival = () => {
           });
       };
 
-      fetchFromUrl(url1).catch(() => {
-        fetchFromUrl(url2).catch((error) => {
+      fetchFromUrl(url1)
+        .catch(() => fetchFromUrl(url2))
+        .catch((error) => {
           console.error("Error", error);
-        });
-      });
+        })
+        .finally(() => setIsLoading(false)); // Koniec ładowania
     };
 
     fetchData();
@@ -93,6 +96,13 @@ const Arrival = () => {
   }, [setArrival, setUpdateTime, isETA]);
 
   const Arrivals = () => {
+    if (isLoading) {
+      return <div>Loading</div>; // Komunikat podczas ładowania
+    }
+
+    if (arrival.length === 0) {
+      return <p>No data</p>; // Gdy nie ma danych
+    }
     return (
       <div className="arrivals">
         <table>

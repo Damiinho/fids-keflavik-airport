@@ -16,6 +16,7 @@ const Departure = () => {
   } = useContext(AppContext);
 
   const [isETD, setIsETD] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleETD = () => {
     setIsETD(true);
@@ -32,6 +33,7 @@ const Departure = () => {
 
   useEffect(() => {
     const fetchData = () => {
+      setIsLoading(true);
       const now = new Date();
       let hours = now.getHours();
       let minutes = now.getMinutes();
@@ -80,11 +82,12 @@ const Departure = () => {
           });
       };
 
-      fetchFromUrl(url1).catch(() => {
-        fetchFromUrl(url2).catch((error) => {
+      fetchFromUrl(url1)
+        .catch(() => fetchFromUrl(url2))
+        .catch((error) => {
           console.error("Error", error);
-        });
-      });
+        })
+        .finally(() => setIsLoading(false)); // Koniec ładowania
     };
 
     fetchData();
@@ -93,6 +96,13 @@ const Departure = () => {
   }, [setDeparture, setUpdateTime, isETD]);
 
   const Departures = () => {
+    if (isLoading) {
+      return <div>Loading</div>; // Komunikat podczas ładowania
+    }
+
+    if (departure.length === 0) {
+      return <p>No data</p>; // Gdy nie ma danych
+    }
     return (
       <div className="departures">
         <table>
