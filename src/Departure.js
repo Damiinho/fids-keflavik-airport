@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { AppContext } from "./AppContext";
+import Loading from "./Loading";
 
 const Departure = () => {
   const {
@@ -97,7 +98,7 @@ const Departure = () => {
 
   const Departures = () => {
     if (isLoading) {
-      return <div>Loading</div>; // Komunikat podczas ładowania
+      return <Loading />; // Komunikat podczas ładowania
     }
 
     if (departure.length === 0) {

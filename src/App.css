@@ -178,3 +178,46 @@ input[type="checkbox"]:checked::before {
   top: 10px;
   left: 10px;
 }
+
+.loading {
+  font-size: 25px;
+  position: relative;
+}
+
+.loading-text {
+  position: absolute;
+  font-weight: 500;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dots {
+  display: inline-block;
+}
+
+.dots::after {
+  content: '';
+  animation: dotsAnimation 1s steps(4, end) infinite;
+}
+
+@keyframes dotsAnimation {
+  0% {
+    content: '';
+  }
+
+  28% {
+    content: '.';
+  }
+
+  50% {
+    content: '..';
+  }
+
+  75% {
+    content: '...';
+  }
+
+  100% {
+    content: '...';
+  }
+}
