@@ -75,7 +75,7 @@ const Departure = () => {
             // Obsługa URL5, gdzie dane są w `contents`
             const actualData = url === url5 ? JSON.parse(data.contents) : data;
             return actualData.value.filter(
-              (item) => item.DepartureArrivalType === "A"
+              (item) => item.DepartureArrivalType === "D"
             );
           })
           .then((data) => {
