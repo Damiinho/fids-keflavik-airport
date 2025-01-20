@@ -58,13 +58,26 @@ const Departure = () => {
       const url2 = `https://api.allorigins.win/raw?url=${encodeURIComponent(
         url1
       )}`;
+      const url3 = `https://corsproxy.io/?url=${encodeURIComponent(url1)}`;
+      const url4 = `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(
+        url1
+      )}`;
+      const url5 = `http://www.whateverorigin.org/get?url=${encodeURIComponent(
+        url1
+      )}`; // tutaj jest contents
 
-      const fetchFromUrl = (url) => {
+      const urls = [url1, url5, url4, url3, url2];
+
+      const fetchFromUrl = (url, isLast = false) => {
         return fetch(url)
           .then((response) => response.json())
-          .then((data) =>
-            data.value.filter((item) => item.DepartureArrivalType === "D")
-          )
+          .then((data) => {
+            // Obsługa URL5, gdzie dane są w `contents`
+            const actualData = url === url5 ? JSON.parse(data.contents) : data;
+            return actualData.value.filter(
+              (item) => item.DepartureArrivalType === "A"
+            );
+          })
           .then((data) => {
             if (isETD) {
               data.sort((a, b) => {
@@ -83,12 +96,22 @@ const Departure = () => {
           });
       };
 
-      fetchFromUrl(url1)
-        .catch(() => fetchFromUrl(url2))
-        .catch((error) => {
-          console.error("Error", error);
-        })
-        .finally(() => setIsLoading(false)); // Koniec ładowania
+      // Wywołanie URL-ów po kolei
+      const tryFetchSequentially = async (urls) => {
+        for (let i = 0; i < urls.length; i++) {
+          try {
+            await fetchFromUrl(urls[i], i === urls.length - 1);
+            break; // Zatrzymaj, jeśli się uda
+          } catch (error) {
+            console.error(`Error fetching from URL${i + 1}:`, error);
+            if (i === urls.length - 1) {
+              console.error("All URLs failed.");
+            }
+          }
+        }
+      };
+
+      tryFetchSequentially(urls).finally(() => setIsLoading(false)); // Koniec ładowania
     };
 
     fetchData();
