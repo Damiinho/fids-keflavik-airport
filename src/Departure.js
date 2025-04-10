@@ -189,6 +189,7 @@ const Departure = () => {
                 "C3", //Trade Air
                 "OS", //Austrian
                 "TK", //Turkish Airlines
+                "4Y", //Discover
               ].includes(item.AirlineIATA);
 
               const matchesSearch = (str) =>
