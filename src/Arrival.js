@@ -193,6 +193,7 @@ const Arrival = () => {
                 "4Y", //Discover
                 "ZT", //Titan Airways
                 "HFM", //Hifly Malta
+                "9AR", //Jetex Flight Support
               ].includes(item.AirlineIATA);
 
               const matchesSearch = (str) =>
