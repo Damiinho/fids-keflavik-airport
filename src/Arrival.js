@@ -194,6 +194,8 @@ const Arrival = () => {
                 "ZT", //Titan Airways
                 "HFM", //Hifly Malta
                 "9AR", //Jetex Flight Support
+                "EVE", //Evelop Airlines
+                "PVG", //Privilege Style
               ].includes(item.AirlineIATA);
 
               const matchesSearch = (str) =>
