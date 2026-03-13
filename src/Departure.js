@@ -65,8 +65,14 @@ const Departure = () => {
       const url5 = `http://www.whateverorigin.org/get?url=${encodeURIComponent(
         url1
       )}`; // tutaj jest contents
+      const url6 = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url1)}`;
+      const url7 = `https://proxy.cors.sh/${url1}`;
+      const url8 = `https://test.cors.workers.dev/?${encodeURIComponent(url1)}`;
+      const url9 = `https://cors-proxy.thebugging.com/${url1}`;
+      const url10 = `https://api.cors.lol/?url=${encodeURIComponent(url1)}`;
+      const url11 = `https://proxy.corsfix.com/?${encodeURIComponent(url1)}`;
 
-      const urls = [url1, url5, url4, url3, url2];
+      const urls = [url1, url5, url4, url3, url2, url6, url7, url8, url9, url10, url11];    
 
       const fetchFromUrl = (url, isLast = false) => {
         return fetch(url)
