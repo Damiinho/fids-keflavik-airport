@@ -203,6 +203,8 @@ const Departure = () => {
                 "PVG", //Privilege Style
                 "V3", //Carpatair
                 "AP", //AlbaStar
+                "TS", //Air Transat
+                
               ].includes(item.AirlineIATA);
 
               const matchesSearch = (str) =>
